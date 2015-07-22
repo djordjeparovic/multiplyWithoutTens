@@ -1,0 +1,103 @@
+<html>
+<head>
+
+<script>
+
+function tensInLE(Number){
+var A = Number.toString(),
+    c = Math.pow(10, A.length-1),
+    B, N = 0;
+
+while ( c > 1 ) {
+	B = Math.floor(parseInt(A)/c);
+	N += B * c/10;
+	c = c - 1; 
+	A = (parseInt(A) - B*c).toString();
+	c = Math.pow(10, A.length - 1);
+	}
+return N;
+}
+
+/** Returns number of tens in [1, Number] */
+function tensInL(Number){
+if (Number % 10 === 0){
+	return tensInLE(Number)-1;
+}else {
+	return tensInLE(Number);
+	}
+}
+
+function multiply(NumA, NumB){
+	return (NumA - tensInL(NumA))*(NumB - tensInL(NumB)) + 
+	tensInLE((NumA - tensInL(NumA))*(NumB - tensInL(NumB)));
+}
+
+function multiplyValues(){
+	var numberA = parseInt(document.getElementById('numa').value);
+	var numberB = parseInt(document.getElementById('numb').value);
+	if (numberA && numberB){
+		var res = multiply(numberA, numberB);
+		document.getElementById("result").innerHTML = res;
+	}else {
+		document.getElementById("result").innerHTML = "Invalid";
+	}
+}
+
+function clearAll() {
+	document.getElementById("numa").value = "Input number A";
+	document.getElementById("numb").value = "Input number B";
+	document.getElementById("result").innerHTML = "Result A*B";
+}
+
+</script>
+<style>
+body {
+	background-color: #ccc;
+	text-align: center;
+}
+#numa, #numb, #result {
+	margin-top: 7px;
+	width: 100%;
+  	max-width: 350px;
+  	height: 60px;
+  	border: 1px solid;
+    border-radius: 5px;
+    font-size: 200%;
+    background-color: #9f2;
+}
+.btn {
+	width: 100%;
+	max-width: 200px;
+	height: 50px;
+	border-radius: 5px;
+    font-size: 100%;
+    background-color: #27f;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btnC {
+	background-color: red;
+	max-width: 150px;
+}
+#result {
+	background-color: cyan;
+	margin: auto;
+}
+
+</style>
+
+</head>
+<body>
+
+<input type="text" id="numa" value="Input number A" onblur="if (this.value == '') {this.value = 'Input number A';}" onfocus="if (this.value == 'Input number A') {this.value = '';}"/> <br>
+<input type="text" id="numb" value="Input number B" onblur="if (this.value == '') {this.value = 'Input number B';}" onfocus="if (this.value == 'Input number B') {this.value = '';}"/><br>
+
+<input type="button" class="btn" value="Multiply" onClick="multiplyValues();">
+<input type="button" class="btn btnC" value="Clear" onClick="clearAll();">
+<div id="result">Result A*B</div>
+
+
+</body>
+
+
+</html>
