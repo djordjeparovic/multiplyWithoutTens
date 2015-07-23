@@ -2,34 +2,70 @@
 <head>
 
 <script>
-
-function tensInLE(Number){
-var A = Number.toString(),
-    c = Math.pow(10, A.length-1),
-    B, N = 0;
-
-while ( c > 1 ) {
-	B = Math.floor(parseInt(A)/c);
-	N += B * c/10;
-	c = c - 1; 
-	A = (parseInt(A) - B*c).toString();
-	c = Math.pow(10, A.length - 1);
+/*
+function tensInL(Number) {
+	Number = Number.toString();
+	console.log(Number);
+	var i = 0; var c; var T = 0;
+	while (Number !== '') {
+		c = parseInt( Number[Number.length - 1] );
+		if (!c && c !== 0) {
+			return "Invalid";
+		}
+		Number = Number.substring(0, Number.length - 1);
+		if(i===0) {
+			i++;
+			continue;
+		}
+		T += c * Math.pow(10, i-1);
+		i++;
 	}
-return N;
+	return T;
+
 }
 
-/** Returns number of tens in [1, Number] */
-function tensInL(Number){
-if (Number % 10 === 0){
-	return tensInLE(Number)-1;
-}else {
-	return tensInLE(Number);
+
+function tensInLE(Number) {
+	var NumberNew = Number.toString();
+	if (NumberNew[NumberNew.length -1] === '0') {
+		return tensInL(Number) - 1;
+	} else {
+		return tensInL(Number);
 	}
 }
+
 
 function multiply(NumA, NumB){
 	return (NumA - tensInL(NumA))*(NumB - tensInL(NumB)) + 
 	tensInLE((NumA - tensInL(NumA))*(NumB - tensInL(NumB)));
+}
+
+*/
+
+function tensInL(Number){
+	var i, R = 0;
+	for (i = 1; i<Number; i++ ){
+		if (i % 10 === 0) {
+			R ++;
+		}
+	}
+	return R;
+}
+
+function gotoNum(Number) {
+	var R = 0; 
+	var Num = Number; 
+	while (Num) {
+		R++; Num--;
+		if(R % 10 === 0) {
+			R++;
+		}
+	}
+	return R;
+}
+
+function multiply(NumA, NumB) {
+	return gotoNum( (NumA - tensInL(NumA)) * (NumB - tensInL(NumB)) );
 }
 
 function multiplyValues(){
@@ -48,6 +84,8 @@ function clearAll() {
 	document.getElementById("numb").value = "Input number B";
 	document.getElementById("result").innerHTML = "Result A*B";
 }
+
+
 
 </script>
 <style>
